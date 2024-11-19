@@ -10,19 +10,28 @@ def make_random_arr(start,end):
 
     return arr
 
+def is_sorted(arr):
+    return arr==sorted(arr)
+
 def main():
     arr=make_random_arr(1,8)
-    turn = 1
+    sorted=False
+    turn = 0
 
     print("간단 숫자 퍼즐")
-    print(f'Turn {turn}')
-    print(arr)
-
-    num1,num2=input_nums()
-    num1_idx=arr.index(num1)
-    num2_idx=arr.index(num2)
-    arr[num1_idx],arr[num2_idx] = arr[num2_idx] ,arr[num1_idx]
-    print(arr)
+    #정렬이 될때까지 반복
+    while not sorted:
+        #턴증가
+        turn+=1
+        print(f'\nTurn {turn}')
+        print(arr,"\n")
+        # 입력받고 교환
+        num1,num2=input_nums()
+        num1_idx=arr.index(num1)
+        num2_idx=arr.index(num2)
+        arr[num1_idx],arr[num2_idx] = arr[num2_idx] ,arr[num1_idx]
+        sorted=is_sorted(arr)
+    print(f'\n축하합니다! {turn}턴만에 퍼즐을 완성하셨습니다!')
 
 def in_range(num):
     return num>0 and num<=8
@@ -38,7 +47,7 @@ def input_nums():
 
         num1,num2=nums[0],nums[1]
         #num2의 시작이 공백이면 공백제거
-        if num2[0]==" ":
+        if len(num2)>0 and num2[0]==" ":
             num2=num2[1:]
         #2개 모두 숫자인가?
         if not (num1.isdigit() and num2.isdigit()):

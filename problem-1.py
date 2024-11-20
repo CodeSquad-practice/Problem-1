@@ -58,7 +58,23 @@ def print_arr(arr):
         print()
 
 def is_sorted(arr):
-    return arr==sorted(arr)
+    target_arr=[]
+    num=1
+    for i in range(4):
+        row=[]
+        for j in range(4):
+            row.append(num)
+            num+=1
+        target_arr.append(row)
+    target_arr[3][3]=0
+    
+    return arr==target_arr
+
+def find_blank(arr):
+    for i in range(4):
+        for j in range(4):
+            if arr[i][j]==0:
+                return (i,j)
 
 def main():
     arr=make_random_arr()
@@ -71,47 +87,32 @@ def main():
         turn+=1
         print(f'\nTurn {turn}')
         print_arr(arr)
-        break
-        # 입력받고 교환
-    #     num1,num2=input_nums()
-    #     num1_idx=arr.index(num1)
-    #     num2_idx=arr.index(num2)
-    #     arr[num1_idx],arr[num2_idx] = arr[num2_idx] ,arr[num1_idx]
-    #     sorted=is_sorted(arr)
-    # print(f'\n축하합니다! {turn}턴만에 퍼즐을 완성하셨습니다!')
+        #br,bc 는 blank의 r,c
+        br,bc=find_blank(arr)
+        input_nums(br,bc,arr)     
+        sorted = is_sorted(arr)
+    print(f'\n축하합니다! {turn}턴만에 퍼즐을 완성하셨습니다!')
 
-# def in_range(num):
-#     return num>0 and num<=8
+def in_arr_range(r,c):
+    return r>=0 and r<4 and c>=0 and c<4
 
-# def input_nums():
-#     while True:
-#         print("교환할 두 숫자를 입력>")
-#         nums=list(input().split(","))
-#         #2개가 아니면 다시
-#         if len(nums)!=2:
-#             print("\n잘못 입력하셨습니다. 다시 입력해주세요\n")
-#             continue
-
-#         num1,num2=nums[0],nums[1]
-#         #num2의 시작이 공백이면 공백제거
-#         if len(num2)>0 and num2[0]==" ":
-#             num2=num2[1:]
-#         #2개 모두 숫자인가?
-#         if not (num1.isdigit() and num2.isdigit()):
-#             print("\n잘못 입력하셨습니다. 다시 입력해주세요\n")
-#             continue
-#         # 2개 모두 범위 안인가?
-#         elif not (in_range(int(num1)) and in_range(int(num2))):
-#             print("\n잘못 입력하셨습니다. 다시 입력해주세요\n")
-#             continue
-#         # 2 숫자가 같은가?
-#         elif int(num1)==int(num2):
-#             print("\n잘못 입력하셨습니다. 다시 입력해주세요\n")
-#             continue
+def input_nums(br,bc,arr):
+    dxs,dys=[0,0,1,-1],[1,-1,0,0]
+    while True:
+        print("숫자 입력>")
+        num=int(input())
+        # num이 blank 와 인접한지 확인
+        for dx,dy in zip(dxs,dys):
+            nr=br+dx
+            nc=bc+dy
+            # 범위를 벗어나지 않고, num이면 자리이동
+            if in_arr_range(nr,nc) and arr[nr][nc]== num:
+                # 자리 이동
+                arr[nr][nc],arr[br][bc]=arr[br][bc],arr[nr][nc]
+                return
+        # blank와 인접하지 않으면 패스
+        print("다시 입력해 주세요.\n")
         
-#         return  int(num1),int(num2)
         
-
-
 if __name__=="__main__":
     main()

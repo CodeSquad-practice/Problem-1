@@ -21,10 +21,6 @@ def can_solve(arr):
                 cnt+=1
     return cnt%2==0
 
-
-a=[1,2,3,4,5,6,7,8,9,10,11,12,13,15,14,0]
-print(can_solve(a))
-
 def make_random_arr():
     while True:
         arr=[i for i in range(16)]
@@ -39,45 +35,50 @@ def make_random_arr():
             for i in range(4):
                 row=[]
                 for j in range(4):
-                    if arr[idx]==0:
-                        arr[idx]=' '
-                    row.append(f"[{arr[idx]:2}]")
+                    row.append(arr[idx])
                     idx+=1
                 board.append(row)
 
             return board
 
 
-arr= make_random_arr()
-for elems in arr:
-    for elem in elems:
-        print(elem, end = ' ')
-    print()
+# arr= make_random_arr()
+# for elems in arr:
+#     for elem in elems:
+#         print(elem, end = ' ')
+#     print()
 
+def print_arr(arr):
+    for elems in arr:
+        for elem in elems:
+            if elem == 0:
+                print('[  ]',end='')
+            else:
+                print(f'[{elem:2}]',end='')
+        print()
 
+def is_sorted(arr):
+    return arr==sorted(arr)
 
-# def is_sorted(arr):
-#     return arr==sorted(arr)
-
-# def main():
-#     arr=make_random_arr(1,8)
-#     sorted=False
-#     turn = 0
-
-#     print("간단 숫자 퍼즐")
-#     #정렬이 될때까지 반복
-#     while not sorted:
-#         #턴증가
-#         turn+=1
-#         print(f'\nTurn {turn}')
-#         print(arr,"\n")
-#         # 입력받고 교환
-#         num1,num2=input_nums()
-#         num1_idx=arr.index(num1)
-#         num2_idx=arr.index(num2)
-#         arr[num1_idx],arr[num2_idx] = arr[num2_idx] ,arr[num1_idx]
-#         sorted=is_sorted(arr)
-#     print(f'\n축하합니다! {turn}턴만에 퍼즐을 완성하셨습니다!')
+def main():
+    arr=make_random_arr()
+    sorted=False
+    turn = 0
+    print("재미있는 15 퍼즐!")
+    #정렬이 될때까지 반복
+    while not sorted:
+        #턴증가
+        turn+=1
+        print(f'\nTurn {turn}')
+        print_arr(arr)
+        break
+        # 입력받고 교환
+    #     num1,num2=input_nums()
+    #     num1_idx=arr.index(num1)
+    #     num2_idx=arr.index(num2)
+    #     arr[num1_idx],arr[num2_idx] = arr[num2_idx] ,arr[num1_idx]
+    #     sorted=is_sorted(arr)
+    # print(f'\n축하합니다! {turn}턴만에 퍼즐을 완성하셨습니다!')
 
 # def in_range(num):
 #     return num>0 and num<=8
@@ -112,5 +113,5 @@ for elems in arr:
         
 
 
-# if __name__=="__main__":
-#     main()
+if __name__=="__main__":
+    main()
